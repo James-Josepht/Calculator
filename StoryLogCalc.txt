@@ -1,0 +1,13 @@
+1. 
+
+after changing UI, there are some chances that the name of the methods in Calculator.cs isnt accurate
+(e.g. button1_click might be button9_click)
+
+so, I adjusted them. I only need to modify and correct Calculator.cs and the variable initialization
+in Calculator.Design.cs!
+
+
+
+
+
+
