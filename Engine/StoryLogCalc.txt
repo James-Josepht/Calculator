@@ -7,6 +7,9 @@ so, I adjusted them. I only need to modify and correct Calculator.cs and the var
 in Calculator.Design.cs!
 
 
+2. Operators seems working, I started to modify the clear part not the backspace. Dot or period seems working too
+I need to start to find some bugs like dividing by zero. 
+
 
 
 

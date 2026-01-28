@@ -158,7 +158,7 @@
             buttonMinus.TabIndex = 10;
             buttonMinus.Text = "-";
             buttonMinus.UseVisualStyleBackColor = true;
-            buttonMinus.Click += buttonMinus_Click;
+            buttonMinus.Click += operation_Click;
             // 
             // buttonAdd
             // 
@@ -168,7 +168,7 @@
             buttonAdd.TabIndex = 11;
             buttonAdd.Text = "+";
             buttonAdd.UseVisualStyleBackColor = true;
-            buttonAdd.Click += buttonAdd_Click;
+            buttonAdd.Click += operation_Click;
             // 
             // buttonOff
             // 
@@ -190,7 +190,7 @@
             buttonMultiply.TabIndex = 13;
             buttonMultiply.Text = "*";
             buttonMultiply.UseVisualStyleBackColor = true;
-            buttonMultiply.Click += buttonMultiply_Click;
+            buttonMultiply.Click += operation_Click;
             // 
             // buttonDivide
             // 
@@ -200,7 +200,7 @@
             buttonDivide.TabIndex = 14;
             buttonDivide.Text = "/";
             buttonDivide.UseVisualStyleBackColor = true;
-            buttonDivide.Click += buttonDivide_Click;
+            buttonDivide.Click += operation_Click;
             // 
             // buttonEquals
             // 
