@@ -63,9 +63,9 @@ namespace CalculatorApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Screenshot_2026_01_01_193059 {
+        internal static System.Drawing.Bitmap arrow_calc_removebg_preview_removebg_preview {
             get {
-                object obj = ResourceManager.GetObject("Screenshot 2026-01-01 193059", resourceCulture);
+                object obj = ResourceManager.GetObject("arrow_calc-removebg-preview-removebg-preview", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

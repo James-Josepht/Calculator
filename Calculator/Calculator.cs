@@ -46,7 +46,7 @@ namespace Calculator
             textBoxResult.Text = result.ToString();
             expression = result.ToString();
         }
-      
+
 
 
         private void Calculator_Load(object sender, EventArgs e)
@@ -77,8 +77,11 @@ namespace Calculator
 
         }
 
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 
- 
+
 }

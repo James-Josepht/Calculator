@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Calculator));
             button1 = new Button();
             button2 = new Button();
             button3 = new Button();
@@ -48,6 +49,14 @@
             textBoxResult = new TextBox();
             buttonDot = new Button();
             button0 = new Button();
+            pictureArrowRight = new PictureBox();
+            pictureBox1 = new PictureBox();
+            pictureBox2 = new PictureBox();
+            pictureBox3 = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)pictureArrowRight).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             SuspendLayout();
             // 
             // button1
@@ -254,12 +263,60 @@
             button0.UseVisualStyleBackColor = true;
             button0.Click += NumButton_Click;
             // 
+            // pictureArrowRight
+            // 
+            pictureArrowRight.Image = CalculatorApp.Properties.Resources.arrow_calc_removebg_preview_removebg_preview;
+            pictureArrowRight.Location = new Point(224, 98);
+            pictureArrowRight.Margin = new Padding(0);
+            pictureArrowRight.Name = "pictureArrowRight";
+            pictureArrowRight.Size = new Size(39, 31);
+            pictureArrowRight.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureArrowRight.TabIndex = 20;
+            pictureArrowRight.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(146, 97);
+            pictureBox1.Margin = new Padding(0);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(39, 31);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 21;
+            pictureBox1.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
+            pictureBox2.Location = new Point(185, 120);
+            pictureBox2.Margin = new Padding(0);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(39, 31);
+            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox2.TabIndex = 22;
+            pictureBox2.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
+            pictureBox3.Location = new Point(185, 78);
+            pictureBox3.Margin = new Padding(0);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(39, 31);
+            pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox3.TabIndex = 23;
+            pictureBox3.TabStop = false;
+            // 
             // Calculator
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
             ClientSize = new Size(407, 385);
+            Controls.Add(pictureBox3);
+            Controls.Add(pictureBox2);
+            Controls.Add(pictureBox1);
+            Controls.Add(pictureArrowRight);
             Controls.Add(buttonDot);
             Controls.Add(button0);
             Controls.Add(textBoxResult);
@@ -283,6 +340,10 @@
             Name = "Calculator";
             Text = "Calculator";
             Load += Calculator_Load;
+            ((System.ComponentModel.ISupportInitialize)pictureArrowRight).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -309,5 +370,9 @@
         private TextBox textBoxResult;
         private Button buttonDot;
         private Button button0;
+        private PictureBox pictureArrowRight;
+        private PictureBox pictureBox1;
+        private PictureBox pictureBox2;
+        private PictureBox pictureBox3;
     }
 }
