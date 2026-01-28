@@ -41,7 +41,7 @@
             buttonParenthesis = new Button();
             buttonMinus = new Button();
             buttonAdd = new Button();
-            buttonOff = new Button();
+            buttonBackspace = new Button();
             buttonMultiply = new Button();
             buttonDivide = new Button();
             buttonEquals = new Button();
@@ -61,7 +61,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(12, 196);
+            button1.Location = new Point(26, 240);
             button1.Name = "button1";
             button1.Size = new Size(100, 40);
             button1.TabIndex = 0;
@@ -71,7 +71,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(118, 196);
+            button2.Location = new Point(132, 240);
             button2.Name = "button2";
             button2.Size = new Size(100, 40);
             button2.TabIndex = 1;
@@ -81,7 +81,7 @@
             // 
             // button3
             // 
-            button3.Location = new Point(224, 196);
+            button3.Location = new Point(238, 240);
             button3.Name = "button3";
             button3.Size = new Size(100, 40);
             button3.TabIndex = 2;
@@ -91,7 +91,7 @@
             // 
             // buttonNum6
             // 
-            buttonNum6.Location = new Point(224, 242);
+            buttonNum6.Location = new Point(238, 286);
             buttonNum6.Name = "buttonNum6";
             buttonNum6.Size = new Size(100, 40);
             buttonNum6.TabIndex = 5;
@@ -101,7 +101,7 @@
             // 
             // buttonNum5
             // 
-            buttonNum5.Location = new Point(118, 242);
+            buttonNum5.Location = new Point(132, 286);
             buttonNum5.Name = "buttonNum5";
             buttonNum5.Size = new Size(100, 40);
             buttonNum5.TabIndex = 4;
@@ -111,7 +111,7 @@
             // 
             // buttonNum4
             // 
-            buttonNum4.Location = new Point(12, 242);
+            buttonNum4.Location = new Point(26, 286);
             buttonNum4.Name = "buttonNum4";
             buttonNum4.Size = new Size(100, 40);
             buttonNum4.TabIndex = 3;
@@ -121,7 +121,7 @@
             // 
             // buttonNum9
             // 
-            buttonNum9.Location = new Point(224, 288);
+            buttonNum9.Location = new Point(238, 332);
             buttonNum9.Name = "buttonNum9";
             buttonNum9.Size = new Size(100, 40);
             buttonNum9.TabIndex = 8;
@@ -131,7 +131,7 @@
             // 
             // buttonNum8
             // 
-            buttonNum8.Location = new Point(118, 288);
+            buttonNum8.Location = new Point(132, 332);
             buttonNum8.Name = "buttonNum8";
             buttonNum8.Size = new Size(100, 40);
             buttonNum8.TabIndex = 7;
@@ -141,7 +141,7 @@
             // 
             // buttonNum7
             // 
-            buttonNum7.Location = new Point(12, 288);
+            buttonNum7.Location = new Point(26, 332);
             buttonNum7.Name = "buttonNum7";
             buttonNum7.Size = new Size(100, 40);
             buttonNum7.TabIndex = 6;
@@ -151,7 +151,7 @@
             // 
             // buttonParenthesis
             // 
-            buttonParenthesis.Location = new Point(12, 160);
+            buttonParenthesis.Location = new Point(26, 204);
             buttonParenthesis.Name = "buttonParenthesis";
             buttonParenthesis.Size = new Size(180, 30);
             buttonParenthesis.TabIndex = 9;
@@ -161,7 +161,7 @@
             // 
             // buttonMinus
             // 
-            buttonMinus.Location = new Point(347, 272);
+            buttonMinus.Location = new Point(361, 316);
             buttonMinus.Name = "buttonMinus";
             buttonMinus.Size = new Size(50, 30);
             buttonMinus.TabIndex = 10;
@@ -171,7 +171,7 @@
             // 
             // buttonAdd
             // 
-            buttonAdd.Location = new Point(347, 236);
+            buttonAdd.Location = new Point(361, 280);
             buttonAdd.Name = "buttonAdd";
             buttonAdd.Size = new Size(50, 30);
             buttonAdd.TabIndex = 11;
@@ -179,21 +179,21 @@
             buttonAdd.UseVisualStyleBackColor = true;
             buttonAdd.Click += operation_Click;
             // 
-            // buttonOff
+            // buttonBackspace
             // 
-            buttonOff.BackColor = Color.FromArgb(255, 128, 128);
-            buttonOff.ForeColor = SystemColors.ControlText;
-            buttonOff.Location = new Point(347, 196);
-            buttonOff.Name = "buttonOff";
-            buttonOff.Size = new Size(50, 30);
-            buttonOff.TabIndex = 12;
-            buttonOff.Text = "Off";
-            buttonOff.UseVisualStyleBackColor = false;
-            buttonOff.Click += buttonOff_Click;
+            buttonBackspace.BackColor = Color.FromArgb(255, 224, 192);
+            buttonBackspace.ForeColor = SystemColors.ControlText;
+            buttonBackspace.Location = new Point(212, 204);
+            buttonBackspace.Name = "buttonBackspace";
+            buttonBackspace.Size = new Size(199, 30);
+            buttonBackspace.TabIndex = 12;
+            buttonBackspace.Text = "←";
+            buttonBackspace.UseVisualStyleBackColor = false;
+            buttonBackspace.Click += buttonOff_Click;
             // 
             // buttonMultiply
             // 
-            buttonMultiply.Location = new Point(347, 308);
+            buttonMultiply.Location = new Point(361, 352);
             buttonMultiply.Name = "buttonMultiply";
             buttonMultiply.Size = new Size(50, 30);
             buttonMultiply.TabIndex = 13;
@@ -203,7 +203,7 @@
             // 
             // buttonDivide
             // 
-            buttonDivide.Location = new Point(347, 344);
+            buttonDivide.Location = new Point(361, 388);
             buttonDivide.Name = "buttonDivide";
             buttonDivide.Size = new Size(50, 30);
             buttonDivide.TabIndex = 14;
@@ -213,7 +213,7 @@
             // 
             // buttonEquals
             // 
-            buttonEquals.Location = new Point(174, 334);
+            buttonEquals.Location = new Point(188, 378);
             buttonEquals.Name = "buttonEquals";
             buttonEquals.Size = new Size(150, 40);
             buttonEquals.TabIndex = 15;
@@ -223,10 +223,10 @@
             // 
             // buttonClear
             // 
-            buttonClear.BackColor = Color.FromArgb(255, 192, 128);
-            buttonClear.Location = new Point(207, 160);
+            buttonClear.BackColor = Color.LightCoral;
+            buttonClear.Location = new Point(361, 240);
             buttonClear.Name = "buttonClear";
-            buttonClear.Size = new Size(190, 30);
+            buttonClear.Size = new Size(50, 30);
             buttonClear.TabIndex = 16;
             buttonClear.Text = "Clear";
             buttonClear.UseVisualStyleBackColor = false;
@@ -234,18 +234,19 @@
             // 
             // textBoxResult
             // 
-            textBoxResult.BorderStyle = BorderStyle.None;
+            textBoxResult.BorderStyle = BorderStyle.FixedSingle;
             textBoxResult.Font = new Font("Lucida Sans Unicode", 30F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBoxResult.Location = new Point(12, 12);
+            textBoxResult.Location = new Point(26, 38);
             textBoxResult.MaximumSize = new Size(500, 200);
             textBoxResult.Name = "textBoxResult";
-            textBoxResult.Size = new Size(385, 62);
+            textBoxResult.Size = new Size(385, 69);
             textBoxResult.TabIndex = 17;
             textBoxResult.TextAlign = HorizontalAlignment.Right;
+            textBoxResult.TextChanged += textBoxResult_TextChanged;
             // 
             // buttonDot
             // 
-            buttonDot.Location = new Point(118, 334);
+            buttonDot.Location = new Point(132, 378);
             buttonDot.Name = "buttonDot";
             buttonDot.Size = new Size(50, 40);
             buttonDot.TabIndex = 19;
@@ -255,7 +256,7 @@
             // 
             // button0
             // 
-            button0.Location = new Point(12, 334);
+            button0.Location = new Point(26, 378);
             button0.Name = "button0";
             button0.Size = new Size(100, 40);
             button0.TabIndex = 18;
@@ -266,53 +267,57 @@
             // pictureArrowRight
             // 
             pictureArrowRight.Image = CalculatorApp.Properties.Resources.arrow_calc_removebg_preview_removebg_preview;
-            pictureArrowRight.Location = new Point(224, 98);
+            pictureArrowRight.Location = new Point(238, 142);
             pictureArrowRight.Margin = new Padding(0);
             pictureArrowRight.Name = "pictureArrowRight";
-            pictureArrowRight.Size = new Size(39, 31);
+            pictureArrowRight.Size = new Size(39, 39);
             pictureArrowRight.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureArrowRight.TabIndex = 20;
             pictureArrowRight.TabStop = false;
+            pictureArrowRight.MouseEnter += pictureArrowRight_MouseEnter;
             // 
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(146, 97);
+            pictureBox1.Location = new Point(160, 141);
             pictureBox1.Margin = new Padding(0);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(39, 31);
+            pictureBox1.Size = new Size(39, 39);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 21;
             pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click_1;
             // 
             // pictureBox2
             // 
             pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(185, 120);
+            pictureBox2.Location = new Point(199, 164);
             pictureBox2.Margin = new Padding(0);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(39, 31);
+            pictureBox2.Size = new Size(39, 39);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 22;
             pictureBox2.TabStop = false;
+            pictureBox2.Click += pictureBox2_Click;
             // 
             // pictureBox3
             // 
             pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
-            pictureBox3.Location = new Point(185, 78);
+            pictureBox3.Location = new Point(199, 122);
             pictureBox3.Margin = new Padding(0);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(39, 31);
+            pictureBox3.Size = new Size(39, 39);
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.TabIndex = 23;
             pictureBox3.TabStop = false;
+            pictureBox3.MouseClick += pictureBox3_MouseClick;
             // 
             // Calculator
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
-            ClientSize = new Size(407, 385);
+            ClientSize = new Size(441, 431);
             Controls.Add(pictureBox3);
             Controls.Add(pictureBox2);
             Controls.Add(pictureBox1);
@@ -324,7 +329,7 @@
             Controls.Add(buttonEquals);
             Controls.Add(buttonDivide);
             Controls.Add(buttonMultiply);
-            Controls.Add(buttonOff);
+            Controls.Add(buttonBackspace);
             Controls.Add(buttonAdd);
             Controls.Add(buttonMinus);
             Controls.Add(buttonParenthesis);
@@ -362,7 +367,7 @@
         private Button buttonParenthesis;
         private Button buttonMinus;
         private Button buttonAdd;
-        private Button buttonOff;
+        private Button buttonBackspace;
         private Button buttonMultiply;
         private Button buttonDivide;
         private Button buttonEquals;

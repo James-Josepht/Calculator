@@ -77,7 +77,28 @@ namespace Calculator
 
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+
+        private void pictureArrowRight_MouseEnter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox3_MouseClick(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void textBoxResult_TextChanged(object sender, EventArgs e)
         {
 
         }
