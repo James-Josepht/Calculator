@@ -1,4 +1,5 @@
 using System.Data;
+using System.Drawing.Design;
 using System.Linq.Expressions;
 
 namespace Calculator
@@ -7,10 +8,11 @@ namespace Calculator
     {
 
         //declaring variables
-        private string currentInput = String.Empty;
+        private double currentNumber = 0;
         private double result = 0;
         private string operation = String.Empty;
         private string expression = String.Empty;
+        private bool newNumberAlert = true;
 
 
         public Calculator()
@@ -21,28 +23,66 @@ namespace Calculator
         private void NumButton_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            expression += btn.Text;
-            textBoxResult.Text = expression;
+
+            if (newNumberAlert)
+            {
+                expression += btn.Text;
+                currentNumber = Double.Parse(expression);
+                textBoxResult.Text = expression;
+ 
+            }
+            else
+            {
+                expression += btn.Text;
+                textBoxResult.Text = expression;
+            }
+
         }
         private void operation_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
 
-            // Prevent double operators like ++ or **
-            /*if (expression.Length == 0)
-                return;*/
+            //if it is empty just add the operator
+            if (expression.Length == 0)
+            {
+                expression += btn.Text;
+                textBoxResult.Text = expression;
+                return;
+            }
 
+            //check last char, then if its an operator, replace it by the current one
             char lastChar = expression[^1];
             if ("+-*/".Contains(lastChar))
+            {
+                expression = expression.Substring(0, expression.Length - 1) + btn.Text;
+                textBoxResult.Text = expression;
+                currentNumber = 0;
+                newNumberAlert = false;
                 return;
+            }
 
             expression += btn.Text;
+            currentNumber = 0;
+            newNumberAlert = false;
             textBoxResult.Text = expression;
         }
         private void buttonEquals_Click(object sender, EventArgs e)
         {
             var table = new DataTable();
-            var result = table.Compute(expression, "");
+            object result;
+            try
+            {
+                if (expression.Contains("/0"))
+                    throw new DivideByZeroException();
+                result = table.Compute(expression, "");
+            }
+            catch (Exception ex)
+            {
+                textBoxResult.Text = "Error";
+                expression = "";
+                return;
+            }
+
             textBoxResult.Text = result.ToString();
             expression = result.ToString();
         }
@@ -55,7 +95,7 @@ namespace Calculator
         }
 
 
-        private void buttonParenthesis_Click(object sender, EventArgs e)
+        private void buttonCloseParen_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
             expression += button.Text;
@@ -72,9 +112,37 @@ namespace Calculator
             expression = "";
             textBoxResult.Text = expression;
         }
-        private void buttonOff_Click(object sender, EventArgs e)
+        private void buttonDel_Click(object sender, EventArgs e)
         {
+            if (!string.IsNullOrEmpty(expression))
+            {
+                expression = expression.Substring(0, expression.Length - 1);
+            }
 
+            textBoxResult.Text = expression;
+
+        }
+
+        private void buttonPosOrNeg_Click(object sender, EventArgs e)
+        {
+            if (currentNumber.ToString().Contains("-"))
+            {
+                currentNumber = Math.Abs(currentNumber);
+                expression = currentNumber.ToString();
+                textBoxResult.Text = expression;
+                return;
+            }
+
+            currentNumber = -Double.Parse(expression); // flip sign
+            expression = currentNumber.ToString();
+            textBoxResult.Text = expression;  // update display
+        }
+
+        private void buttonOpenParen_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            expression += button.Text;
+            textBoxResult.Text = expression;
         }
 
 
@@ -102,7 +170,12 @@ namespace Calculator
         {
 
         }
+
+        
     }
 
-
+    public partial class PictureCalc
+    {
+        
+    }
 }

@@ -38,7 +38,7 @@
             buttonNum9 = new Button();
             buttonNum8 = new Button();
             buttonNum7 = new Button();
-            buttonParenthesis = new Button();
+            buttonCloseParen = new Button();
             buttonMinus = new Button();
             buttonAdd = new Button();
             buttonBackspace = new Button();
@@ -53,6 +53,8 @@
             pictureBox1 = new PictureBox();
             pictureBox2 = new PictureBox();
             pictureBox3 = new PictureBox();
+            buttonOpenParen = new Button();
+            buttonPosOrNeg = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureArrowRight).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -149,15 +151,15 @@
             buttonNum7.UseVisualStyleBackColor = true;
             buttonNum7.Click += NumButton_Click;
             // 
-            // buttonParenthesis
+            // buttonCloseParen
             // 
-            buttonParenthesis.Location = new Point(26, 204);
-            buttonParenthesis.Name = "buttonParenthesis";
-            buttonParenthesis.Size = new Size(180, 30);
-            buttonParenthesis.TabIndex = 9;
-            buttonParenthesis.Text = "( )";
-            buttonParenthesis.UseVisualStyleBackColor = true;
-            buttonParenthesis.Click += buttonParenthesis_Click;
+            buttonCloseParen.Location = new Point(154, 204);
+            buttonCloseParen.Name = "buttonCloseParen";
+            buttonCloseParen.Size = new Size(52, 30);
+            buttonCloseParen.TabIndex = 9;
+            buttonCloseParen.Text = ")";
+            buttonCloseParen.UseVisualStyleBackColor = true;
+            buttonCloseParen.Click += buttonCloseParen_Click;
             // 
             // buttonMinus
             // 
@@ -189,7 +191,7 @@
             buttonBackspace.TabIndex = 12;
             buttonBackspace.Text = "←";
             buttonBackspace.UseVisualStyleBackColor = false;
-            buttonBackspace.Click += buttonOff_Click;
+            buttonBackspace.Click += buttonDel_Click;
             // 
             // buttonMultiply
             // 
@@ -235,11 +237,11 @@
             // textBoxResult
             // 
             textBoxResult.BorderStyle = BorderStyle.FixedSingle;
-            textBoxResult.Font = new Font("Lucida Sans Unicode", 30F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textBoxResult.Font = new Font("Times New Roman", 36F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBoxResult.Location = new Point(26, 38);
             textBoxResult.MaximumSize = new Size(500, 200);
             textBoxResult.Name = "textBoxResult";
-            textBoxResult.Size = new Size(385, 69);
+            textBoxResult.Size = new Size(385, 63);
             textBoxResult.TabIndex = 17;
             textBoxResult.TextAlign = HorizontalAlignment.Right;
             textBoxResult.TextChanged += textBoxResult_TextChanged;
@@ -267,7 +269,7 @@
             // pictureArrowRight
             // 
             pictureArrowRight.Image = CalculatorApp.Properties.Resources.arrow_calc_removebg_preview_removebg_preview;
-            pictureArrowRight.Location = new Point(238, 142);
+            pictureArrowRight.Location = new Point(232, 130);
             pictureArrowRight.Margin = new Padding(0);
             pictureArrowRight.Name = "pictureArrowRight";
             pictureArrowRight.Size = new Size(39, 39);
@@ -279,7 +281,7 @@
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(160, 141);
+            pictureBox1.Location = new Point(154, 129);
             pictureBox1.Margin = new Padding(0);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(39, 39);
@@ -291,7 +293,7 @@
             // pictureBox2
             // 
             pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(199, 164);
+            pictureBox2.Location = new Point(193, 152);
             pictureBox2.Margin = new Padding(0);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(39, 39);
@@ -303,7 +305,7 @@
             // pictureBox3
             // 
             pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
-            pictureBox3.Location = new Point(199, 122);
+            pictureBox3.Location = new Point(193, 110);
             pictureBox3.Margin = new Padding(0);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(39, 39);
@@ -312,12 +314,34 @@
             pictureBox3.TabStop = false;
             pictureBox3.MouseClick += pictureBox3_MouseClick;
             // 
+            // buttonOpenParen
+            // 
+            buttonOpenParen.Location = new Point(96, 204);
+            buttonOpenParen.Name = "buttonOpenParen";
+            buttonOpenParen.Size = new Size(52, 30);
+            buttonOpenParen.TabIndex = 24;
+            buttonOpenParen.Text = "( ";
+            buttonOpenParen.UseVisualStyleBackColor = true;
+            buttonOpenParen.Click += buttonOpenParen_Click;
+            // 
+            // buttonPosOrNeg
+            // 
+            buttonPosOrNeg.Location = new Point(26, 204);
+            buttonPosOrNeg.Name = "buttonPosOrNeg";
+            buttonPosOrNeg.Size = new Size(64, 30);
+            buttonPosOrNeg.TabIndex = 25;
+            buttonPosOrNeg.Text = "+/-";
+            buttonPosOrNeg.UseVisualStyleBackColor = true;
+            buttonPosOrNeg.Click += buttonPosOrNeg_Click;
+            // 
             // Calculator
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
             ClientSize = new Size(441, 431);
+            Controls.Add(buttonPosOrNeg);
+            Controls.Add(buttonOpenParen);
             Controls.Add(pictureBox3);
             Controls.Add(pictureBox2);
             Controls.Add(pictureBox1);
@@ -332,7 +356,7 @@
             Controls.Add(buttonBackspace);
             Controls.Add(buttonAdd);
             Controls.Add(buttonMinus);
-            Controls.Add(buttonParenthesis);
+            Controls.Add(buttonCloseParen);
             Controls.Add(buttonNum9);
             Controls.Add(buttonNum8);
             Controls.Add(buttonNum7);
@@ -364,7 +388,7 @@
         private Button buttonNum9;
         private Button buttonNum8;
         private Button buttonNum7;
-        private Button buttonParenthesis;
+        private Button buttonCloseParen;
         private Button buttonMinus;
         private Button buttonAdd;
         private Button buttonBackspace;
@@ -379,5 +403,7 @@
         private PictureBox pictureBox1;
         private PictureBox pictureBox2;
         private PictureBox pictureBox3;
+        private Button buttonOpenParen;
+        private Button buttonPosOrNeg;
     }
 }

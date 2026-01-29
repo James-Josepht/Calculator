@@ -11,6 +11,10 @@ in Calculator.Design.cs!
 I need to start to find some bugs like dividing by zero. 
 
 
+3. Start to focus on positive and negative numbers. I need to add a logic for that.
+I also need to include how parenthesis works.
 
+4. positive and negative symbol works now in any places, I only need to change what is the current number
+after I click an operator.
 
 
