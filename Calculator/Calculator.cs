@@ -1,4 +1,4 @@
-using System.Data;
+﻿using System.Data;
 using System.Drawing.Design;
 using System.Linq.Expressions;
 
@@ -23,24 +23,13 @@ namespace Calculator
         private void NumButton_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-
-            if (newNumberAlert)
-            {
-                expression += btn.Text;
-                currentNumber = Double.Parse(expression);
-                textBoxResult.Text = expression;
- 
-            }
-            else
-            {
-                expression += btn.Text;
-                textBoxResult.Text = expression;
-            }
-
+            expression += btn.Text;
+            textBoxResult.Text = expression;
         }
         private void operation_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
+            string[] seperatedNum;
 
             //if it is empty just add the operator
             if (expression.Length == 0)
@@ -56,36 +45,105 @@ namespace Calculator
             {
                 expression = expression.Substring(0, expression.Length - 1) + btn.Text;
                 textBoxResult.Text = expression;
-                currentNumber = 0;
                 newNumberAlert = false;
                 return;
             }
 
             expression += btn.Text;
-            currentNumber = 0;
+
             newNumberAlert = false;
             textBoxResult.Text = expression;
         }
         private void buttonEquals_Click(object sender, EventArgs e)
         {
             var table = new DataTable();
-            object result;
-            try
-            {
-                if (expression.Contains("/0"))
-                    throw new DivideByZeroException();
-                result = table.Compute(expression, "");
-            }
-            catch (Exception ex)
+
+            if (!expression.Any(char.IsDigit))
             {
                 textBoxResult.Text = "Error";
-                expression = "";
                 return;
             }
 
-            textBoxResult.Text = result.ToString();
-            expression = result.ToString();
+            // Build computation string with implicit multiplication
+            string computation = "";
+            for (int i = 0; i < expression.Length; i++)
+            {
+                char current = expression[i];
+
+                if (i > 0)
+                {
+                    char prev = expression[i - 1];
+
+                    // Insert '*' in these cases:
+                    // 1) ')' followed by '(' or a digit
+                    // 2) digit followed by '('
+                    if ((prev == ')' && (current == '(' || char.IsDigit(current))) ||
+                        (char.IsDigit(prev) && current == '('))
+                    {
+                        computation += "*";
+                    }
+                }
+
+                computation += current;
+            }
+
+            try
+            {
+                if (computation.Contains("/0"))
+                    throw new DivideByZeroException();
+
+                var result = table.Compute(computation, "");
+                textBoxResult.Text = result.ToString();
+
+                // -------------------------
+                // Save to history BEFORE overwriting expression
+                history.Add(expression);
+                historyIndex = history.Count; // reset index to after the last element
+                                              // -------------------------
+
+                // Update expression with result (displayed) 
+                expression = result.ToString();
+            }
+            catch
+            {
+                textBoxResult.Text = "Error";
+                expression = "";
+            }
         }
+
+
+        private void buttonPosOrNeg_Click(object sender, EventArgs e)
+        {
+            ToggleLastNumberSign();
+        }
+
+        private void ToggleLastNumberSign()
+        {
+            if (string.IsNullOrEmpty(expression))
+                return;
+
+            int i = expression.Length - 1;
+
+            // Move left while digit or dot
+            while (i >= 0 && (char.IsDigit(expression[i]) || expression[i] == '.'))
+                i--;
+
+            // Check for unary minus
+            if (i >= 0 && expression[i] == '-' &&
+                (i == 0 || "+-*/(".Contains(expression[i - 1])))
+            {
+                // Remove the minus
+                expression = expression.Remove(i, 1);
+            }
+            else
+            {
+                // Insert minus
+                expression = expression.Insert(i + 1, "-");
+            }
+
+            textBoxResult.Text = expression;
+        }
+
 
 
 
@@ -94,6 +152,12 @@ namespace Calculator
 
         }
 
+        private void buttonOpenParen_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            expression += button.Text;
+            textBoxResult.Text = expression;
+        }
 
         private void buttonCloseParen_Click(object sender, EventArgs e)
         {
@@ -123,59 +187,53 @@ namespace Calculator
 
         }
 
-        private void buttonPosOrNeg_Click(object sender, EventArgs e)
-        {
-            if (currentNumber.ToString().Contains("-"))
-            {
-                currentNumber = Math.Abs(currentNumber);
-                expression = currentNumber.ToString();
-                textBoxResult.Text = expression;
-                return;
-            }
 
-            currentNumber = -Double.Parse(expression); // flip sign
-            expression = currentNumber.ToString();
-            textBoxResult.Text = expression;  // update display
-        }
 
-        private void buttonOpenParen_Click(object sender, EventArgs e)
+        private List<string> history = new List<string>();
+        private int historyIndex = -1; // Tracks where we are in the history
+
+        private void pictureArrowDown_Click(object sender, EventArgs e)
         {
-            Button button = (Button)sender;
-            expression += button.Text;
+
+            if (history.Count == 0) return;
+
+            historyIndex++;
+            if (historyIndex >= history.Count) historyIndex = history.Count - 1;
+
+            expression = history[historyIndex];
             textBoxResult.Text = expression;
         }
 
-
-        private void pictureArrowRight_MouseEnter(object sender, EventArgs e)
+        private void pictureArrowLeft_Click(object sender, EventArgs e)
         {
-
+            // Ensure the cursor doesn't go past the start
+            if (textBoxResult.SelectionStart > 0)
+            {
+                textBoxResult.SelectionStart--;
+                textBoxResult.SelectionLength = 0; // just move cursor, no selection
+            }
         }
 
-        private void pictureBox1_Click_1(object sender, EventArgs e)
+        private void pictureArrowUp_Click(object sender, EventArgs e)
         {
+            if (history.Count == 0) return;
 
+            historyIndex--;
+            if (historyIndex < 0) historyIndex = 0;
+
+            expression = history[historyIndex];
+            textBoxResult.Text = expression;
         }
 
-        private void pictureBox2_Click(object sender, EventArgs e)
+        private void pictureArrowRight_Click(object sender, EventArgs e)
         {
-
+            if (textBoxResult.SelectionStart < textBoxResult.Text.Length)
+            {
+                textBoxResult.SelectionStart++;
+                textBoxResult.SelectionLength = 0;
+            }
         }
-
-        private void pictureBox3_MouseClick(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void textBoxResult_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        
     }
 
-    public partial class PictureCalc
-    {
-        
-    }
+
 }

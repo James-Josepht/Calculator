@@ -17,4 +17,4 @@ I also need to include how parenthesis works.
 4. positive and negative symbol works now in any places, I only need to change what is the current number
 after I click an operator.
 
-
+5. finisged all changes excluding  left and right button. I will sleep now

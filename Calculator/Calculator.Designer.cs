@@ -50,15 +50,15 @@
             buttonDot = new Button();
             button0 = new Button();
             pictureArrowRight = new PictureBox();
-            pictureBox1 = new PictureBox();
-            pictureBox2 = new PictureBox();
-            pictureBox3 = new PictureBox();
+            pictureArrowLeft = new PictureBox();
+            pictureArrowDown = new PictureBox();
+            pictureArrowUp = new PictureBox();
             buttonOpenParen = new Button();
             buttonPosOrNeg = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureArrowRight).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureArrowLeft).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureArrowDown).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureArrowUp).BeginInit();
             SuspendLayout();
             // 
             // button1
@@ -244,7 +244,6 @@
             textBoxResult.Size = new Size(385, 63);
             textBoxResult.TabIndex = 17;
             textBoxResult.TextAlign = HorizontalAlignment.Right;
-            textBoxResult.TextChanged += textBoxResult_TextChanged;
             // 
             // buttonDot
             // 
@@ -276,43 +275,43 @@
             pictureArrowRight.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureArrowRight.TabIndex = 20;
             pictureArrowRight.TabStop = false;
-            pictureArrowRight.MouseEnter += pictureArrowRight_MouseEnter;
+            pictureArrowRight.Click += pictureArrowRight_Click;
             // 
-            // pictureBox1
+            // pictureArrowLeft
             // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(154, 129);
-            pictureBox1.Margin = new Padding(0);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(39, 39);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 21;
-            pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click_1;
+            pictureArrowLeft.Image = (Image)resources.GetObject("pictureArrowLeft.Image");
+            pictureArrowLeft.Location = new Point(154, 129);
+            pictureArrowLeft.Margin = new Padding(0);
+            pictureArrowLeft.Name = "pictureArrowLeft";
+            pictureArrowLeft.Size = new Size(39, 39);
+            pictureArrowLeft.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureArrowLeft.TabIndex = 21;
+            pictureArrowLeft.TabStop = false;
+            pictureArrowLeft.Click += pictureArrowLeft_Click;
             // 
-            // pictureBox2
+            // pictureArrowDown
             // 
-            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(193, 152);
-            pictureBox2.Margin = new Padding(0);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(39, 39);
-            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox2.TabIndex = 22;
-            pictureBox2.TabStop = false;
-            pictureBox2.Click += pictureBox2_Click;
+            pictureArrowDown.Image = (Image)resources.GetObject("pictureArrowDown.Image");
+            pictureArrowDown.Location = new Point(193, 152);
+            pictureArrowDown.Margin = new Padding(0);
+            pictureArrowDown.Name = "pictureArrowDown";
+            pictureArrowDown.Size = new Size(39, 39);
+            pictureArrowDown.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureArrowDown.TabIndex = 22;
+            pictureArrowDown.TabStop = false;
+            pictureArrowDown.Click += pictureArrowDown_Click;
             // 
-            // pictureBox3
+            // pictureArrowUp
             // 
-            pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
-            pictureBox3.Location = new Point(193, 110);
-            pictureBox3.Margin = new Padding(0);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(39, 39);
-            pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox3.TabIndex = 23;
-            pictureBox3.TabStop = false;
-            pictureBox3.MouseClick += pictureBox3_MouseClick;
+            pictureArrowUp.Image = (Image)resources.GetObject("pictureArrowUp.Image");
+            pictureArrowUp.Location = new Point(193, 110);
+            pictureArrowUp.Margin = new Padding(0);
+            pictureArrowUp.Name = "pictureArrowUp";
+            pictureArrowUp.Size = new Size(39, 39);
+            pictureArrowUp.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureArrowUp.TabIndex = 23;
+            pictureArrowUp.TabStop = false;
+            pictureArrowUp.Click += pictureArrowUp_Click;
             // 
             // buttonOpenParen
             // 
@@ -320,7 +319,7 @@
             buttonOpenParen.Name = "buttonOpenParen";
             buttonOpenParen.Size = new Size(52, 30);
             buttonOpenParen.TabIndex = 24;
-            buttonOpenParen.Text = "( ";
+            buttonOpenParen.Text = "(";
             buttonOpenParen.UseVisualStyleBackColor = true;
             buttonOpenParen.Click += buttonOpenParen_Click;
             // 
@@ -342,9 +341,9 @@
             ClientSize = new Size(441, 431);
             Controls.Add(buttonPosOrNeg);
             Controls.Add(buttonOpenParen);
-            Controls.Add(pictureBox3);
-            Controls.Add(pictureBox2);
-            Controls.Add(pictureBox1);
+            Controls.Add(pictureArrowUp);
+            Controls.Add(pictureArrowDown);
+            Controls.Add(pictureArrowLeft);
             Controls.Add(pictureArrowRight);
             Controls.Add(buttonDot);
             Controls.Add(button0);
@@ -370,9 +369,9 @@
             Text = "Calculator";
             Load += Calculator_Load;
             ((System.ComponentModel.ISupportInitialize)pictureArrowRight).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureArrowLeft).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureArrowDown).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureArrowUp).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -400,9 +399,9 @@
         private Button buttonDot;
         private Button button0;
         private PictureBox pictureArrowRight;
-        private PictureBox pictureBox1;
-        private PictureBox pictureBox2;
-        private PictureBox pictureBox3;
+        private PictureBox pictureArrowLeft;
+        private PictureBox pictureArrowDown;
+        private PictureBox pictureArrowUp;
         private Button buttonOpenParen;
         private Button buttonPosOrNeg;
     }
