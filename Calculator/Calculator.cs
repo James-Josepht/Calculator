@@ -18,6 +18,7 @@ namespace Calculator
         public Calculator()
         {
             InitializeComponent();
+            textBoxResult.ReadOnly = true;
         }
 
         private void NumButton_Click(object sender, EventArgs e)
@@ -28,30 +29,41 @@ namespace Calculator
         private void operation_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            string[] seperatedNum;
+            ResetCaret();
 
-            //if it is empty just add the operator
-            if (expression.Length == 0)
+            int start = textBoxResult.SelectionStart;
+            int length = textBoxResult.SelectionLength;
+
+            // Remove any selected text first
+            if (length > 0)
             {
-                expression += btn.Text;
-                textBoxResult.Text = expression;
-                return;
+                expression = expression.Remove(start, length);
             }
 
-            //check last char, then if its an operator, replace it by the current one
-            char lastChar = expression[^1];
-            if ("+-*/".Contains(lastChar))
+            // If inserting at position > 0 and left char is an operator, replace it
+            if (start > 0 && start - 1 < expression.Length && "+-*/".Contains(expression[start - 1]))
             {
-                expression = expression.Substring(0, expression.Length - 1) + btn.Text;
+                expression = expression.Remove(start - 1, 1).Insert(start - 1, btn.Text);
                 textBoxResult.Text = expression;
+
+                // place caret after the inserted operator (which is at start - 1)
+                textBoxResult.SelectionStart = start;
+                textBoxResult.SelectionLength = 0;
                 newNumberAlert = false;
+                historyIndex = history.Count;
                 return;
             }
 
-            expression += btn.Text;
+            // Otherwise insert operator at caret position
+            expression = expression.Insert(start, btn.Text);
+            textBoxResult.Text = expression;
+
+            // place caret after the newly inserted operator
+            textBoxResult.SelectionStart = start + btn.Text.Length;
+            textBoxResult.SelectionLength = 0;
 
             newNumberAlert = false;
-            textBoxResult.Text = expression;
+            historyIndex = history.Count;
         }
         private void buttonEquals_Click(object sender, EventArgs e)
         {
@@ -102,10 +114,18 @@ namespace Calculator
 
                 // Update expression with result (displayed) 
                 expression = result.ToString();
+
+                // Put caret at the end so new typing appends to the result (not at start)
+                textBoxResult.SelectionStart = textBoxResult.Text.Length;
+                textBoxResult.SelectionLength = 0;
+                textBoxResult.Focus();
+
+                // keep caret/jump behavior consistent
+                ResetCaret();
             }
             catch (DivideByZeroException)
             {
-                textBoxResult.Text = "Cannot divide by zero";
+                textBoxResult.Text = "Error";
                 expression = "";
             }
             catch
@@ -113,7 +133,6 @@ namespace Calculator
                 textBoxResult.Text = "Error";
                 expression = "";
             }
-            
         }
 
 
@@ -148,9 +167,6 @@ namespace Calculator
 
             textBoxResult.Text = expression;
         }
-
-
-
 
         private void Calculator_Load(object sender, EventArgs e)
         {
@@ -199,8 +215,6 @@ namespace Calculator
          * 
          */
 
-
-
         private List<string> history = new List<string>();
         private int historyIndex = -1; // Tracks where we are in the history
         private bool caretInitialized = false;
@@ -219,7 +233,7 @@ namespace Calculator
                 caretInitialized = true;
                 return;
             }
-            
+
 
             if (textBoxResult.SelectionStart > 0)
             {
@@ -254,8 +268,31 @@ namespace Calculator
             int start = textBoxResult.SelectionStart;
             int length = textBoxResult.SelectionLength;
 
+            // Remove selection first (existing behavior)
             if (length > 0)
                 expression = expression.Remove(start, length);
+
+            // If user requests a dot, ensure the current number doesn't already contain one.
+            if (value == ".")
+            {
+                // Find the bounds of the number at the insertion point (digits and dots)
+                int left = start - 1;
+                while (left >= 0 && (char.IsDigit(expression[left]) || expression[left] == '.')) left--;
+                int right = start;
+                while (right < expression.Length && (char.IsDigit(expression[right]) || expression[right] == '.')) right++;
+
+                string currentNumber = expression.Substring(left + 1, right - (left + 1)); // may be empty
+
+                // If the number already has a dot, ignore the insertion.
+                if (currentNumber.Contains("."))
+                    return;
+
+                // If inserting dot at a position that should start a number (start of expression
+                // or after an operator or '('), prefer inserting "0." instead of just "."
+                bool needLeadingZero = (start == 0) || (start > 0 && "+-*/(".Contains(expression[start - 1]));
+                if (needLeadingZero)
+                    value = "0.";
+            }
 
             expression = expression.Insert(start, value);
 
