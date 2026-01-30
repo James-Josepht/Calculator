@@ -29,39 +29,52 @@ namespace Calculator
         private void operation_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            ResetCaret();
+
+            // If the user has moved the caret with the arrow buttons (caretInitialized == true)
+            // then insert at the caret. Otherwise (default) append at the end.
+            bool userMovedCaret = caretInitialized;
 
             int start = textBoxResult.SelectionStart;
             int length = textBoxResult.SelectionLength;
 
-            // Remove any selected text first
-            if (length > 0)
-            {
-                expression = expression.Remove(start, length);
-            }
+            // Decide insertion position: caret (if user moved) or end (default)
+            int pos = userMovedCaret ? start : expression.Length;
 
-            // If inserting at position > 0 and left char is an operator, replace it
-            if (start > 0 && start - 1 < expression.Length && "+-*/".Contains(expression[start - 1]))
+            // If user moved caret and there is a selection, remove it first.
+            if (userMovedCaret && length > 0)
+                expression = expression.Remove(start, length);
+
+            // If there's an operator immediately to the left of insertion position, replace it.
+            if (pos > 0 && pos - 1 < expression.Length && "+-*/".Contains(expression[pos - 1]))
             {
-                expression = expression.Remove(start - 1, 1).Insert(start - 1, btn.Text);
+                expression = expression.Remove(pos - 1, 1).Insert(pos - 1, btn.Text);
                 textBoxResult.Text = expression;
 
-                // place caret after the inserted operator (which is at start - 1)
-                textBoxResult.SelectionStart = start;
+                // caret: keep it right after the operator. If appending, keep at end.
+                textBoxResult.SelectionStart = userMovedCaret ? pos : expression.Length;
                 textBoxResult.SelectionLength = 0;
+
                 newNumberAlert = false;
                 historyIndex = history.Count;
                 return;
             }
 
-            // Otherwise insert operator at caret position
-            expression = expression.Insert(start, btn.Text);
+            // Normal insert at chosen position
+            expression = expression.Insert(pos, btn.Text);
             textBoxResult.Text = expression;
 
-            // place caret after the newly inserted operator
-            textBoxResult.SelectionStart = start + btn.Text.Length;
-            textBoxResult.SelectionLength = 0;
+            if (userMovedCaret)
+            {
+                // place caret after the inserted operator at the caret position
+                textBoxResult.SelectionStart = pos + btn.Text.Length;
+            }
+            else
+            {
+                // default behavior: show operator at the end and keep caret at end
+                textBoxResult.SelectionStart = expression.Length;
+            }
 
+            textBoxResult.SelectionLength = 0;
             newNumberAlert = false;
             historyIndex = history.Count;
         }
@@ -138,34 +151,71 @@ namespace Calculator
 
         private void buttonPosOrNeg_Click(object sender, EventArgs e)
         {
-            ToggleLastNumberSign();
+            // preserve caret position (use end of selection if text is selected)
+            int caret = textBoxResult.SelectionStart + textBoxResult.SelectionLength;
+            // keep existing caret/jump behavior in sync
+            ResetCaret();
+            ToggleLastNumberSign(caret);
         }
 
-        private void ToggleLastNumberSign()
+        // Toggle the sign of the number that contains (or is immediately left of) caretPos.
+        private void ToggleLastNumberSign(int caretPos)
         {
             if (string.IsNullOrEmpty(expression))
                 return;
 
-            int i = expression.Length - 1;
+            // clamp caretPos to expression length
+            if (caretPos < 0) caretPos = 0;
+            if (caretPos > expression.Length) caretPos = expression.Length;
 
-            // Move left while digit or dot
-            while (i >= 0 && (char.IsDigit(expression[i]) || expression[i] == '.'))
-                i--;
+            // choose a starting scan position: if there's a digit to the left of caret use that,
+            // otherwise try the char at caret (covers caret at start of a number).
+            int scan = caretPos - 1;
+            if (scan < 0 && expression.Length > 0 && (char.IsDigit(expression[0]) || expression[0] == '.'))
+                scan = 0;
 
-            // Check for unary minus
-            if (i >= 0 && expression[i] == '-' &&
-                (i == 0 || "+-*/(".Contains(expression[i - 1])))
+            // If caret isn't within or adjacent to a number, fall back to last number in expression
+            if (scan < 0 || !(char.IsDigit(expression[scan]) || expression[scan] == '.'))
             {
-                // Remove the minus
-                expression = expression.Remove(i, 1);
+                scan = expression.Length - 1;
+                while (scan >= 0 && !(char.IsDigit(expression[scan]) || expression[scan] == '.')) scan--;
+                if (scan < 0) return; // no number found
+            }
+
+            // Move left while digit or dot to find the number's left boundary
+            int left = scan;
+            while (left >= 0 && (char.IsDigit(expression[left]) || expression[left] == '.')) left--;
+
+            // left now points to the char before the number (or -1)
+            int insertPos = left + 1;
+
+            // Check for unary minus immediately before number
+            if (left >= 0 && expression[left] == '-' &&
+                (left == 0 || "+-*/(".Contains(expression[left - 1])))
+            {
+                // Remove the minus and adjust caret if needed
+                expression = expression.Remove(left, 1);
+                if (caretPos > left) caretPos = Math.Max(0, caretPos - 1);
             }
             else
             {
-                // Insert minus
-                expression = expression.Insert(i + 1, "-");
+                // Insert a minus before the number and adjust caret if needed
+                expression = expression.Insert(insertPos, "-");
+                if (caretPos > insertPos) caretPos = Math.Min(expression.Length, caretPos + 1);
             }
 
             textBoxResult.Text = expression;
+
+            // restore caret to a sensible position (clamped)
+            textBoxResult.SelectionStart = Math.Clamp(caretPos, 0, expression.Length);
+            textBoxResult.SelectionLength = 0;
+        }
+
+        private void ToggleLastNumberSign()
+        {
+            // kept for backward compatibility if called elsewhere without caret info
+            int caret = textBoxResult.SelectionStart + textBoxResult.SelectionLength;
+            ToggleLastNumberSign(caret);
         }
 
         private void Calculator_Load(object sender, EventArgs e)
